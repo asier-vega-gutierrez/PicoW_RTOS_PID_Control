@@ -17,8 +17,21 @@ void led_task()
     }
 }
 
-int main()
-{
+void get_orientation(void *parameters){
+
+}
+
+void control_servo(void *parameters){
+
+}
+
+void serial(void *parameters){
+
+}
+
+int main(){
+
+    //Iniciar stdio para usar la terminal
     stdio_init_all();
 
     xTaskCreate(led_task, "LED_Task", 256, NULL, 1, NULL);

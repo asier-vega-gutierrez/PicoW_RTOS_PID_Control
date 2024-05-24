@@ -2874,7 +2874,8 @@ CMakeFiles/mpu6050.dir/mpu6050.c.obj: ../mpu6050.c \
   /usr/include/newlib/string.h \
   /usr/include/newlib/sys/_locale.h \
   /usr/include/newlib/strings.h \
-  /usr/include/newlib/sys/string.h
+  /usr/include/newlib/sys/string.h \
+  /usr/include/newlib/math.h
 
 
 ../mpu6050.c:
