@@ -3,6 +3,17 @@
 29140400a8217e860b4cb083ae30dd24 pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default_padded_checksummed_asm
 c9b21e3d8b75d797cf663e28dd6eb27f pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
 86574c98418523ddd1cc75e6075a245b pico-sdk/src/rp2_common/boot_stage2/bs2_default_padded_checksummed.S
+fc366ea693c47138b666c5d28a5b0999 pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/PioasmBuild
+2a8e5c603e867d08e73bc37be96a85f7 pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/PioasmBuild-complete
+fc366ea693c47138b666c5d28a5b0999 pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/cyw43_driver_picow_cyw43_bus_pio_spi_pio_h
+8db29926a97b37ba9b4ac3b39837de70 pico-sdk/src/rp2_common/pico_cyw43_driver/cyw43_bus_pio_spi.pio.h
+2b96c1b56343c75fcdaa76c70ba5efb9 pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-build
+cdb9cdef2175ce69ccce3e25f51fa81a pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-configure
+37837eced04f5b4466607cf30403e2ed pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-download
+c646baf86d80a4a19a708c886edd62d3 pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-install
+4df4b335a49de946fb5d07e69739c2b4 pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-mkdir
+4fbed211a612621ee29517c4bf1cd0f9 pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-patch
+ec2b60b573dff8d7e372dfb3ea3480ac pico-sdk/src/rp2_common/pico_cyw43_driver/pioasm/src/PioasmBuild-stamp/PioasmBuild-update
 5855c0242f2218d81e480f298509cb5f src/CMakeFiles/ELF2UF2Build
 7012cb98819736800873adb4cd277b5c src/CMakeFiles/ELF2UF2Build-complete
 dd862ab2278a5b1272a43154bb3fca48 src/elf2uf2/src/ELF2UF2Build-stamp/ELF2UF2Build-build

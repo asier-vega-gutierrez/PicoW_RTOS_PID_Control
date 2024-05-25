@@ -67,4 +67,12 @@ src/CMakeFiles/pico-rtos.dir/main.c.obj: \
  /home/ubuntu/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h \
  /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h \
- /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h
+ /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
+ /home/ubuntu/pico-project/pico_rtos/src/task/task_get_orientation.c \
+ /home/ubuntu/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
+ /home/ubuntu/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/i2c.h \
+ /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/i2c.h \
+ /usr/include/newlib/string.h /usr/include/newlib/sys/_locale.h \
+ /usr/include/newlib/strings.h /usr/include/newlib/sys/string.h \
+ /usr/include/newlib/math.h \
+ /home/ubuntu/pico-project/pico_rtos/src/const/const.h

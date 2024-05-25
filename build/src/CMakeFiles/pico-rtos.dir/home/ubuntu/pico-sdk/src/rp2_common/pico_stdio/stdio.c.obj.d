@@ -52,8 +52,4 @@ src/CMakeFiles/pico-rtos.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdi
  /home/ubuntu/pico-sdk/src/common/pico_sync/include/pico/mutex.h \
  /home/ubuntu/pico-sdk/src/common/pico_sync/include/pico/lock_core.h \
  /home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/include/hardware/sync.h \
- /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
- /home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/include/hardware/uart.h \
- /home/ubuntu/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h \
- /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
- /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h
+ /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h
