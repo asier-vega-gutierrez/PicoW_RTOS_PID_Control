@@ -1,9 +1,14 @@
+#include "FreeRTOS.h"
+
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+
 #include "const/const.h"
+#include "globals/globals.h"
 
 
 static void mpu6050_read_raw(int16_t accel[3], int16_t gyro[3], int16_t *temp) {
@@ -76,6 +81,8 @@ void task_get_orientation(void *parameters){
     uint64_t last_time = time_us_64();
     uint64_t current_time;
     float elapsed_time;
+    //Para enviar mensajes al serial
+    char msg_serial[150];
 
     while (1) {
         //Leemos valores
@@ -105,7 +112,14 @@ void task_get_orientation(void *parameters){
             yaw += Gz * elapsed_time;
         }
         
-        printf("Pitch = %f °, Roll = %f °, Yaw = %f °\n", pitch, roll, yaw);
+        //printf("Pitch = %f °, Roll = %f °, Yaw = %f °\n", pitch, roll, yaw);
+
+        //Enviamos los datos a a cola del serial
+        memset(msg_serial, 0, sizeof(msg_serial));
+        sprintf(msg_serial, "Pitch = %f °, Roll = %f °, Yaw = %f °", pitch, roll, yaw);
+        msg_serial[sizeof(msg_serial) - 1] = '\0';
+        xQueueSend(queue_serial, (void *)&msg_serial, 0);
+
         //Esperamos un tiempo
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }

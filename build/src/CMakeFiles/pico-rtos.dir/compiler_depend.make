@@ -3582,26 +3582,8 @@ src/CMakeFiles/pico-rtos.dir/main.c.obj: ../src/main.c \
   ../lib/free_rtos/include/mpu_wrappers.h \
   ../lib/free_rtos/include/task.h \
   ../lib/free_rtos/include/list.h \
-  /usr/include/newlib/stdio.h \
-  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdarg.h \
-  /usr/include/newlib/sys/reent.h \
-  /usr/include/newlib/_ansi.h \
-  /usr/include/newlib/sys/_types.h \
-  /usr/include/newlib/machine/_types.h \
-  /usr/include/newlib/sys/lock.h \
-  /usr/include/newlib/sys/types.h \
-  /usr/include/newlib/sys/_stdint.h \
-  /usr/include/newlib/machine/endian.h \
-  /usr/include/newlib/machine/_endian.h \
-  /usr/include/newlib/sys/select.h \
-  /usr/include/newlib/sys/_sigset.h \
-  /usr/include/newlib/sys/_timeval.h \
-  /usr/include/newlib/sys/timespec.h \
-  /usr/include/newlib/sys/_timespec.h \
-  /usr/include/newlib/sys/_pthreadtypes.h \
-  /usr/include/newlib/sys/sched.h \
-  /usr/include/newlib/machine/types.h \
-  /usr/include/newlib/sys/stdio.h \
+  ../lib/free_rtos/include/queue.h \
+  ../lib/free_rtos/include/task.h \
   /home/ubuntu/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h \
   /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h \
   /home/ubuntu/pico-sdk/src/common/pico_time/include/pico/time.h \
@@ -3623,6 +3605,28 @@ src/CMakeFiles/pico-rtos.dir/main.c.obj: ../src/main.c \
   /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
   /home/ubuntu/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h \
   /home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
+  /usr/include/newlib/stdio.h \
+  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdarg.h \
+  /usr/include/newlib/sys/reent.h \
+  /usr/include/newlib/_ansi.h \
+  /usr/include/newlib/sys/_types.h \
+  /usr/include/newlib/machine/_types.h \
+  /usr/include/newlib/sys/lock.h \
+  /usr/include/newlib/sys/types.h \
+  /usr/include/newlib/sys/_stdint.h \
+  /usr/include/newlib/machine/endian.h \
+  /usr/include/newlib/machine/_endian.h \
+  /usr/include/newlib/sys/select.h \
+  /usr/include/newlib/sys/_sigset.h \
+  /usr/include/newlib/sys/_timeval.h \
+  /usr/include/newlib/sys/timespec.h \
+  /usr/include/newlib/sys/_timespec.h \
+  /usr/include/newlib/sys/_pthreadtypes.h \
+  /usr/include/newlib/sys/sched.h \
+  /usr/include/newlib/machine/types.h \
+  /usr/include/newlib/sys/stdio.h \
+  ../src/const/const.h \
+  ../src/globals/globals.h \
   ../src/task/task_get_orientation.c \
   /home/ubuntu/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
   /home/ubuntu/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/i2c.h \
@@ -3632,8 +3636,15 @@ src/CMakeFiles/pico-rtos.dir/main.c.obj: ../src/main.c \
   /usr/include/newlib/strings.h \
   /usr/include/newlib/sys/string.h \
   /usr/include/newlib/math.h \
-  ../src/const/const.h
+  ../src/const/const.h \
+  ../src/globals/globals.h \
+  ../src/task/task_serial.c \
+  ../src/task/task_control_servo.c
 
+
+../src/task/task_serial.c:
+
+../src/globals/globals.h:
 
 ../src/const/const.h:
 
@@ -3894,6 +3905,8 @@ generated/pico_base/pico/config_autogen.h:
 ../lib/free_rtos/portable/ThirdParty/GCC/RP2040/port.c:
 
 /usr/include/newlib/stdlib.h:
+
+../src/task/task_control_servo.c:
 
 ../src/FreeRTOSConfig.h:
 

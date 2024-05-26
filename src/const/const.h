@@ -8,4 +8,8 @@
 //Direccion i2c del sensor (por defecto)
 #define I2C_ADDR 0x68
 
+//Tamaños y tipo de colas
+const int queue_serial_size = 20;
+const char queue_serial_data[150];
+
 #endif
