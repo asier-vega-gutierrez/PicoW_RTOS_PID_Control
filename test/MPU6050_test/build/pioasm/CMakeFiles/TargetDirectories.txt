@@ -1,3 +1,0 @@
-/home/ubuntu/pico-project/MPU6050_test/build/pioasm/CMakeFiles/pioasm.dir
-/home/ubuntu/pico-project/MPU6050_test/build/pioasm/CMakeFiles/edit_cache.dir
-/home/ubuntu/pico-project/MPU6050_test/build/pioasm/CMakeFiles/rebuild_cache.dir
