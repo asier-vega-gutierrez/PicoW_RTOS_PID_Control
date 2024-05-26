@@ -1,3 +1,0 @@
-/home/ubuntu/pico-project/pico_rtos/build/pioasm/CMakeFiles/pioasm.dir
-/home/ubuntu/pico-project/pico_rtos/build/pioasm/CMakeFiles/edit_cache.dir
-/home/ubuntu/pico-project/pico_rtos/build/pioasm/CMakeFiles/rebuild_cache.dir
