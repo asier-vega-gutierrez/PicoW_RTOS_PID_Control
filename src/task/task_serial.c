@@ -5,6 +5,7 @@
 #include "const/const.h"
 #include "globals/globals.h"
 
+//Para pintar por el serial de forma comu
 void task_serial(void *parameters){
     char msg_serial[150];
 
