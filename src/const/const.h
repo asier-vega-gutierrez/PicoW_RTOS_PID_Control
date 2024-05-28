@@ -11,8 +11,10 @@
 #define PIN_PWM 6
 
 //Tamaños y tipo de colas
-const int queue_serial_size = 20;
-const char queue_serial_data[150];
+const int QUEUE_SERIAL_SIZE = 20;
+const char QUEUE_SERIAL_DATA[150];
+const int QUEUE_SENSOR_SIZE = 5;
+const float QUEUE_SENSOR_DATA;
 
 //Limites del servo
 const int PULSE_WIDTH_MAX = 2500;

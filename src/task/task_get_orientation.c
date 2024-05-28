@@ -111,8 +111,20 @@ void task_get_orientation(void *parameters){
         if(0.5 < Gz * elapsed_time || -0.5 > Gz * elapsed_time){
             yaw += Gz * elapsed_time;
         }
-        
-        //printf("Pitch = %f °, Roll = %f °, Yaw = %f °\n", pitch, roll, yaw);
+
+        //Enviamos los datos al PID
+        if (xQueueSend(queue_sensor, (void *)&yaw, 0) == pdFALSE){
+            //Si la lista esta llena recivimos el ultimo valor enviado y lo desechamos
+            //TODO MUTEX con pid recieve
+            xQueueReceive(queue_sensor, NULL, 0);
+            //Enviamos el valor de nuevo, asi mantenemos las lista siempre actualizada
+            if(xQueueSend(queue_sensor, (void *)&yaw, 0) == pdFALSE){
+                memset(msg_serial, 0, sizeof(msg_serial));
+                sprintf(msg_serial, "Couldnt send the value of the sensor!");
+                msg_serial[sizeof(msg_serial) - 1] = '\0';
+                xQueueSend(queue_serial, (void *)&msg_serial, 0);
+            }
+        }
 
         //Enviamos los datos a a cola del serial
         memset(msg_serial, 0, sizeof(msg_serial));
@@ -121,6 +133,6 @@ void task_get_orientation(void *parameters){
         xQueueSend(queue_serial, (void *)&msg_serial, 0);
 
         //Esperamos un tiempo
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }

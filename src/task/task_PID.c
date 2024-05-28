@@ -2,68 +2,47 @@
 #include "FreeRTOS.h"
 //C std
 #include <time.h>
+#include "queue.h"
 //Own
 #include "const/const.h"
 #include "globals/globals.h"
 
-// PID structure definition
-typedef struct {
-    double Kp;  // Proportional gain
-    double Ki;  // Integral gain
-    double Kd;  // Derivative gain
-    double previous_error;  // Previous error
-    double integral;  // Integral of the error
-    double setpoint;  // Desired setpoint
-} PID;
-
-// Function to initialize the PID structure
-void PID_Init(PID *pid, double Kp, double Ki, double Kd, double setpoint) {
-    pid->Kp = Kp;
-    pid->Ki = Ki;
-    pid->Kd = Kd;
-    pid->previous_error = 0;
-    pid->integral = 0;
-    pid->setpoint = setpoint;
-}
-
-// Function to compute the PID output
-double PID_Compute(PID *pid, double current_value) {
-    double error = pid->setpoint - current_value;
-    pid->integral += error;
-    double derivative = error - pid->previous_error;
-    double output = pid->Kp * error + pid->Ki * pid->integral + pid->Kd * derivative;
-    pid->previous_error = error;
-    return output;
-}
-
 //Para 
 void pid(void *parameters){
-    PID pid;
-    double setpoint = 100;  // Desired value
-    double current_value = 0;  // Current value
-    double control_signal;
-    double Kp = 1.0, Ki = 0.1, Kd = 0.0;
-    double time_step = 1.0;  // Time step in seconds
-    time_t start, end;
-    double elapsed_time;
 
-    PID_Init(&pid, Kp, Ki, Kd, setpoint);
+    //Esperamos a que la lista de 10 lecturas del sensor se llene completamente
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    //Para enviar mensajes al serial
+    char msg_serial[150];
+
+    float sensor_data[QUEUE_SENSOR_SIZE];
+    float sum = 0.0;
+    float avg = 0.0;
+    int num_elements = sizeof(sensor_data) / sizeof(sensor_data[0]);
 
     while (1) {
-
         
+        //Nada mas se inicia la tarea se deven obtener los ultimos 5 valores
+        for (int i = 0; i < num_elements; i++) {
+            //para ello se vacia la cola completamente (esta esta actualizandose constantemente simpre que se llena en su orgen)
+            xQueueReceive(queue_sensor, (void *)&sensor_data[i], 0);
+            //Vamos sumando todos los valores
+            sum += sensor_data[i];
+        }
+        //Calculamos la media
+        avg = sum / num_elements;
+        
+        //Enviamos la media al serial
+        memset(msg_serial, 0, sizeof(msg_serial));
+        sprintf(msg_serial, "Current Value = %f", avg);
+        msg_serial[sizeof(msg_serial) - 1] = '\0';
+        xQueueSend(queue_serial, (void *)&msg_serial, 0);
 
-        /*time(&start);
-        // Compute the control signal
-        control_signal = PID_Compute(&pid, current_value);
-        // Update the process variable (this is just an example, replace with your actual process model)
-        current_value += control_signal * time_step;
-        printf("Setpoint: %.2f, Current Value: %.2f, Control Signal: %.2f\n", setpoint, current_value, control_signal);
-        // Wait for the next time step
-        do {
-            time(&end);
-            elapsed_time = difftime(end, start);
-        } while (elapsed_time < time_step);*/
+        //Reseteamos la acumualcion de valores
+        sum = 0.0;
 
+        //Esperamos un tiempo
+        vTaskDelay(25 / portTICK_PERIOD_MS);
     }
 }

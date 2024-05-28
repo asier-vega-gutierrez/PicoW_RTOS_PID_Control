@@ -14,7 +14,6 @@
 #include "task/task_control_servo.c"
 #include "task/task_PID.c"
 
-
 //Tarea para leer el sensor mpu6050
 void task_get_orientation(void *parameters);
 //Tarea para usar el serial
@@ -30,7 +29,8 @@ int main(){
     stdio_init_all();
 
     //Iniciacion de colas
-    queue_serial = xQueueCreate(queue_serial_size, sizeof(queue_serial_data));
+    queue_serial = xQueueCreate(QUEUE_SERIAL_SIZE, sizeof(QUEUE_SERIAL_DATA));
+    queue_sensor = xQueueCreate(QUEUE_SENSOR_SIZE, sizeof(QUEUE_SENSOR_DATA));
 
     //Iniciacion de la tarea del mpu6050
     xTaskCreate(task_get_orientation, "task_get_orientation", 256, NULL, 4, NULL);
