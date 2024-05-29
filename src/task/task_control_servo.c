@@ -31,25 +31,34 @@ void control_servo(void *parameters){
     gpio_init(PIN_PWM);
     gpio_set_dir(PIN_PWM, GPIO_OUT);
 
-    //Varibles para controlar la posicion del servo
-    float servo_goal = 70;
-    float servo_current = 0;
+    //Variables para controlar la posicion del servo
+    float servo_goal = 0;
+    float servo_current = 0; //este servo current es para desactivar el servo si ya esta en su posicion
 
     //Para enviar mensajes al serial
     char msg_serial[50];
 
     while (1) {
+
+        //Leemos el valor pero sin eliminarlo de la lista
+        xQueuePeek(queue_servo, (void *)&servo_goal, 0);
+
+
         //Tenemos que comprovar con un margen si la posicion objetivo a cambiado
-        if (!(servo_current + 0.5 > servo_goal && servo_current - 0.5 < servo_goal)){
+        if (!(servo_current + 3.0 > servo_goal && servo_current - 3.0 < servo_goal)){
             //Si ha cambiado entonces le decimos al servo que valla a la nueva posicion objetivo
             move_servo(servo_goal);
-            //Pintamos por el serial el cambio de posicon del servo
-            sprintf(msg_serial, "Servo = %f", servo_goal);
-            xQueueSend(queue_serial, (void *)&msg_serial, 0);
             //Actualizamos la posicion actual
             servo_current = servo_goal;
+
+            //Pintamos por el serial el cambio de posicion del servo
+            memset(msg_serial, 0, sizeof(msg_serial));
+            sprintf(msg_serial, "Servo Goal = %f", servo_goal);
+            msg_serial[sizeof(msg_serial) - 1] = '\0';
+            xQueueSend(queue_serial, (void *)&msg_serial, 0);
         }
+
         //Esperamos un tiempo
-        vTaskDelay(20 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }

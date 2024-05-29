@@ -108,22 +108,27 @@ void task_get_orientation(void *parameters){
         pitch = 0.98 * (pitch + Gy * elapsed_time) + 0.02 * acc_pitch;
         roll = 0.98 * (roll + Gx * elapsed_time) + 0.02 * acc_roll;
         //Para el yaw hay que hacer una acumulacion por lo tanto se genera mucho rudio, con esto se elimina
-        if(0.5 < Gz * elapsed_time || -0.5 > Gz * elapsed_time){
+        if(0.1 < Gz * elapsed_time || -0.1 > Gz * elapsed_time){
             yaw += Gz * elapsed_time;
         }
 
         //Enviamos los datos al PID
         if (xQueueSend(queue_sensor, (void *)&yaw, 0) == pdFALSE){
-            //Si la lista esta llena recivimos el ultimo valor enviado y lo desechamos
-            //TODO MUTEX con pid recieve
-            xQueueReceive(queue_sensor, NULL, 0);
-            //Enviamos el valor de nuevo, asi mantenemos las lista siempre actualizada
-            if(xQueueSend(queue_sensor, (void *)&yaw, 0) == pdFALSE){
-                memset(msg_serial, 0, sizeof(msg_serial));
-                sprintf(msg_serial, "Couldnt send the value of the sensor!");
-                msg_serial[sizeof(msg_serial) - 1] = '\0';
-                xQueueSend(queue_serial, (void *)&msg_serial, 0);
+            //Vamos a accder a un recurso compartido que es el mutex mutex_queue_sensor_recieve
+            if(xSemaphoreTake(mutex_queue_sensor_recieve, 0) == pdTRUE) {
+                //Si la lista esta llena recivimos el ultimo valor enviado y lo desechamos
+                xQueueReceive(queue_sensor, NULL, 0);
+                //Salimos del recurso compartido
+                xSemaphoreGive(mutex_queue_sensor_recieve);
+                //Enviamos el valor de nuevo, asi mantenemos las lista siempre actualizada
+                if(xQueueSend(queue_sensor, (void *)&yaw, 0) == pdFALSE){
+                    memset(msg_serial, 0, sizeof(msg_serial));
+                    sprintf(msg_serial, "Couldnt send the value of the sensor!");
+                    msg_serial[sizeof(msg_serial) - 1] = '\0';
+                    xQueueSend(queue_serial, (void *)&msg_serial, 0);
+                }
             }
+            //Si se llega a no cojer el mutex, simplemente el se mantendra un valor anterior hasta que el buffer se actualice
         }
 
         //Enviamos los datos a a cola del serial

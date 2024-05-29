@@ -15,10 +15,15 @@ const int QUEUE_SERIAL_SIZE = 20;
 const char QUEUE_SERIAL_DATA[150];
 const int QUEUE_SENSOR_SIZE = 5;
 const float QUEUE_SENSOR_DATA;
+const int QUEUE_SERVO_SIZE = 1;
+const float QUEUE_SERVO_DATA;
 
 //Limites del servo
 const int PULSE_WIDTH_MAX = 2500;
 const int PULSE_WIDTH_MIN = 300;
+
+//Configuracion del PID
+const float KP = 1.5;
 
 
 

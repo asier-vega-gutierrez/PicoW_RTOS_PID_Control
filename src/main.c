@@ -31,6 +31,10 @@ int main(){
     //Iniciacion de colas
     queue_serial = xQueueCreate(QUEUE_SERIAL_SIZE, sizeof(QUEUE_SERIAL_DATA));
     queue_sensor = xQueueCreate(QUEUE_SENSOR_SIZE, sizeof(QUEUE_SENSOR_DATA));
+    queue_servo = xQueueCreate(QUEUE_SERVO_SIZE, sizeof(QUEUE_SERVO_DATA));
+
+    //Iniciacion de mutex y semaforos
+    mutex_queue_sensor_recieve = xSemaphoreCreateMutex();
 
     //Iniciacion de la tarea del mpu6050
     xTaskCreate(task_get_orientation, "task_get_orientation", 256, NULL, 4, NULL);
