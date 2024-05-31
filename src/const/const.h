@@ -2,13 +2,17 @@
 #define CONSTANTS_H
 
 //Pines de i2c y nombre del puerto i2c
-#define PIN_SCL 5
-#define PIN_SDA 4
+const int PIN_SCL = 5;
+const int PIN_SDA = 4;
 #define I2C_PORT i2c0
 //Direccion i2c del sensor (por defecto)
-#define I2C_ADDR 0x68
+const int I2C_ADDR = 0x68;
 //Pin para el PWM del servo
-#define PIN_PWM 6
+const int PIN_PWM = 6;
+//Pin de parada de emergencia (tambien se usa como rearme)
+const int PIN_EM = 7;
+//Pin de reset del sistema
+const int PIN_RESET = 8;
 
 //Tamaños y tipo de colas
 const int QUEUE_SERIAL_SIZE = 20;

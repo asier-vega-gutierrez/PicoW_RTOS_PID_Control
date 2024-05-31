@@ -38,27 +38,31 @@ void control_servo(void *parameters){
     //Para enviar mensajes al serial
     char msg_serial[50];
 
+    //Colocamos el servo en la posicion inicial
+    servo_goal = 5;
+    move_servo(servo_goal);
+
     while (1) {
 
         //Leemos el valor pero sin eliminarlo de la lista
         xQueuePeek(queue_servo, (void *)&servo_goal, 0);
 
-
         //Tenemos que comprovar con un margen si la posicion objetivo a cambiado
-        if (!(servo_current + 3.0 > servo_goal && servo_current - 3.0 < servo_goal)){
+        if (!(servo_current + 5.0 > servo_goal && servo_current - 5.0 < servo_goal)){
             //Si ha cambiado entonces le decimos al servo que valla a la nueva posicion objetivo
-            move_servo(servo_goal);
+            //move_servo(servo_goal);
+            
             //Actualizamos la posicion actual
             servo_current = servo_goal;
 
             //Pintamos por el serial el cambio de posicion del servo
             memset(msg_serial, 0, sizeof(msg_serial));
-            sprintf(msg_serial, "Servo Goal = %f", servo_goal);
+            sprintf(msg_serial, "--------Servo Goal = %f", servo_goal);
             msg_serial[sizeof(msg_serial) - 1] = '\0';
             xQueueSend(queue_serial, (void *)&msg_serial, 0);
         }
 
         //Esperamos un tiempo
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }

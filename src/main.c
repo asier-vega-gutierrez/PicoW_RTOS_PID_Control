@@ -13,6 +13,7 @@
 #include "task/task_serial.c"
 #include "task/task_control_servo.c"
 #include "task/task_PID.c"
+#include "task/task_emergency.c"
 
 //Tarea para leer el sensor mpu6050
 void task_get_orientation(void *parameters);
@@ -22,6 +23,9 @@ void task_serial(void *parameters);
 void control_servo(void *parameters);
 //Tarea para calcular el movimiento con el PID
 void pid(void *parameters);
+//Tarea para ejecutar el ciclo de emrgencia
+void task_emergency(void *pvParameters);
+
 
 int main(){
 
@@ -36,14 +40,23 @@ int main(){
     //Iniciacion de mutex y semaforos
     mutex_queue_sensor_recieve = xSemaphoreCreateMutex();
 
-    //Iniciacion de la tarea del mpu6050
-    xTaskCreate(task_get_orientation, "task_get_orientation", 256, NULL, 4, NULL);
-    //Iniciacion de la tarea para usar el serial
-    xTaskCreate(task_serial, "task_serial", 256, NULL, 1, NULL);
+    //Iniciacion del boton de emergencia por ISR
+    gpio_set_irq_enabled_with_callback(PIN_EM, GPIO_IRQ_EDGE_RISE , true, &emergency_callback);
+
+    //Iniciacion del boton de reset
+    gpio_init(PIN_RESET);
+    gpio_set_dir(PIN_RESET, GPIO_IN);
+
     //Iniciacion de la tarea del servo
-    xTaskCreate(control_servo, "control_servo", 256, NULL, 3, NULL);
+    xTaskCreate(control_servo, "control_servo", 256, NULL, 4, &xTaskHandleControlServo);
+    //Iniciacion de la tarea del mpu6050
+    xTaskCreate(task_get_orientation, "task_get_orientation", 256, NULL, 3, &xTaskHandleGetOrientation);
     //Iniciacion de la tarea del PID
-    xTaskCreate(pid, "PID", 256, NULL, 2, NULL);
+    xTaskCreate(pid, "PID", 256, NULL, 2, &xTaskHandlePID);
+    //Iniciacion de la tarea para usar el serial
+    xTaskCreate(task_serial, "task_serial", 256, NULL, 1, &xTaskHandleSerial);
+    //Iniciacion de la tarea a jecutar dspues de interrupcion de emergencia
+    xTaskCreate(task_emergency, "task_emergency", 256, NULL, 31, &xTaskHandleEmergency);
 
     vTaskStartScheduler();
     while(1){};
