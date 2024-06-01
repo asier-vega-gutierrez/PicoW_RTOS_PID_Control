@@ -22,6 +22,4 @@ TaskHandle_t xTaskHandlePID = NULL;
 TaskHandle_t xTaskHandleSerial = NULL;
 TaskHandle_t xTaskHandleEmergency = NULL;
 
-//
-
 #endif

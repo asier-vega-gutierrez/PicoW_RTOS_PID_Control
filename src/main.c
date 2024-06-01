@@ -43,10 +43,6 @@ int main(){
     //Iniciacion del boton de emergencia por ISR
     gpio_set_irq_enabled_with_callback(PIN_EM, GPIO_IRQ_EDGE_RISE , true, &emergency_callback);
 
-    //Iniciacion del boton de reset
-    gpio_init(PIN_RESET);
-    gpio_set_dir(PIN_RESET, GPIO_IN);
-
     //Iniciacion de la tarea del servo
     xTaskCreate(control_servo, "control_servo", 256, NULL, 4, &xTaskHandleControlServo);
     //Iniciacion de la tarea del mpu6050
