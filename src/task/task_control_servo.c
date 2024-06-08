@@ -22,7 +22,6 @@ void move_servo(int servo_goal){
         sleep_us(pulse_widht);
         gpio_put(PIN_PWM, 0);
         sleep_us(20000 - pulse_widht);
-        gpio_put(PIN_PWM, 0);
     }
 }
 
@@ -42,22 +41,16 @@ void control_servo(void *parameters){
     //Colocamos el servo en la posicion inicial
     servo_goal = 10;
     move_servo(servo_goal);
-    //vTaskDelay(10000 / portTICK_PERIOD_MS);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
 
     while (1) {
-
-        servo_goal = 100;
-        move_servo(servo_goal);
-
-        /*//Leemos el valor pero sin eliminarlo de la lista
+        
+        //Leemos el valor pero sin eliminarlo de la lista
         xQueuePeek(queue_servo, (void *)&servo_goal, 0);
-
-
 
         //Tenemos que comprovar con un margen si la posicion objetivo a cambiado
         if (!(servo_current + 5.0 > 100 && servo_current - 5.0 < 100)){
             
-            servo_goal = 100;
             //Si ha cambiado entonces le decimos al servo que valla a la nueva posicion objetivo
             move_servo(servo_goal);
             
@@ -66,14 +59,13 @@ void control_servo(void *parameters){
 
             //Pintamos por el serial el cambio de posicion del servo
             memset(msg_serial, 0, sizeof(msg_serial));
-            sprintf(msg_serial, "--------Servo Goal = %f", servo_goal);
+            sprintf(msg_serial, "Moving servo to = %f", servo_goal);
             msg_serial[sizeof(msg_serial) - 1] = '\0';
             xQueueSend(queue_serial, (void *)&msg_serial, 0);
-
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
 
         //Esperamos un tiempo
-        vTaskDelay(10000 / portTICK_PERIOD_MS);*/
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
+        
     }
 }

@@ -27,7 +27,9 @@ const int PULSE_WIDTH_MAX = 2500;
 const int PULSE_WIDTH_MIN = 300;
 
 //Configuracion del PID
-const float KP = 1.5;
+const float KP = 1.0;
+const float KI = 0.1;
+const float KD = 0.01;
 
 
 

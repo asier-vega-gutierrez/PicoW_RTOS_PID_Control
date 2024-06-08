@@ -7,17 +7,23 @@
 #include "const/const.h"
 #include "globals/globals.h"
 
-float calculate_control_value(float setpoint, float processVariable) {
+float calculate_control_value(float setpoint, float processVariable, float dt, float integral, float previousError) {
     //Ajustamos el valor del preoceso a rangos de 180 grados (el servo solo permite controlar hasta 180)
     if (processVariable > 180){
         processVariable = 180.0;
     }else if (processVariable < 0.0){
         processVariable = 0.0;
     }
-    //Calculamos le error
+    //Calculamos el error
     float error = setpoint - processVariable;
-    //Calculamos la accion proporcional
-    float controlOutput = KP * error;
+    //Calculamos la integral
+    integral += error * dt;
+    // Calculate the derivative
+    float derivative = (error - previousError) / dt;
+    // Calculate the control output
+    float controlOutput = KP * error + KI * integral + KD * derivative;
+    // Save the current error for the next iteration
+    previousError = error;
     //Ajustamos la accion de control para que como maximo te mande a 180 grados o a -180 grados (te has pasado)
     if (controlOutput > 180){
         controlOutput = 180.0;
@@ -50,10 +56,20 @@ float read_current_value(){
 //Para 
 void pid(void *parameters){
 
+    //Varaibels de entrada y salida del PID
     float current_value = 0.0;
     float setpoint = 100.0;
     float control_value = 0.0;
     float servo_goal = 0.0;
+
+    //Variables persistentes del PID
+    float integral = 0.0;
+    float previousError = 0.0;
+
+    //Para calcula el timepo entre ciclos del PID
+    TickType_t lastTick = xTaskGetTickCount();
+    TickType_t currentTick;
+    float dt;
 
     //Para enviar mensajes al serial
     char msg_serial[150];
@@ -66,7 +82,13 @@ void pid(void *parameters){
             current_value = read_current_value();
         }
 
-        control_value = calculate_control_value(setpoint,current_value);
+        //Calculamos la direferencia del tiempo para el PID
+        currentTick = xTaskGetTickCount();
+        dt = (currentTick - lastTick) / (float)configTICK_RATE_HZ;
+        lastTick = currentTick;
+
+        //Realizamoa el calculo del PID
+        control_value = calculate_control_value(setpoint,current_value, dt, integral, previousError);
 
         //Enviamos los valores al serial si no se llega a cojer el mutex se envia el valor anterior
         memset(msg_serial, 0, sizeof(msg_serial));
