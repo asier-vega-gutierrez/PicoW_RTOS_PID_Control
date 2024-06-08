@@ -65,7 +65,7 @@ void control_servo(void *parameters){
         }
 
         //Esperamos un tiempo
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
         
     }
 }
