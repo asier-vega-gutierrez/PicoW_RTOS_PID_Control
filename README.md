@@ -6,6 +6,3 @@
         
 ![foto](https://github.com/asier-vega-gutierrez/PicoW_RTOS_PID_Control/blob/main/doc/system.png)
 
-</li>
-    <li>Resultados:</li>
-</ul>
